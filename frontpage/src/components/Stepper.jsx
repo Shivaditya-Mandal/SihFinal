@@ -14,14 +14,12 @@ export default function Stepper({ onComplete }) {
   const totalSteps = 5;
 
   const prevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
   return (
     <div className="stepper-container">
-      {/* Progress bar with circles */}
+      {/* Step Indicators */}
       <div className="step-indicators">
         {[...Array(totalSteps)].map((_, i) => {
           const stepNum = i + 1;
@@ -36,7 +34,7 @@ export default function Stepper({ onComplete }) {
                     : ""
                 }`}
               >
-                {stepNum}
+                {currentStep > stepNum ? "✓" : stepNum}
               </div>
               {stepNum < totalSteps && (
                 <div
@@ -50,61 +48,51 @@ export default function Stepper({ onComplete }) {
         })}
       </div>
 
-      {/* Step content */}
+      {/* Step Content */}
       <div className="step-content">
         {currentStep === 1 && (
           <input
             type="text"
-            placeholder="paid/unpaid"
+            placeholder="Expect to get PAID?"
             value={formData.input1}
-            onChange={(e) =>
-              setFormData({ ...formData, input1: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, input1: e.target.value })}
           />
         )}
         {currentStep === 2 && (
           <input
             type="text"
-            placeholder="Skillset"
+            placeholder="Tell me about our projects"
             value={formData.input2}
-            onChange={(e) =>
-              setFormData({ ...formData, input2: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, input2: e.target.value })}
           />
         )}
         {currentStep === 3 && (
           <input
             type="text"
-            placeholder="brief explanation of your projects"
+            placeholder="What jobtitle you dream of?"
             value={formData.input3}
-            onChange={(e) =>
-              setFormData({ ...formData, input3: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, input3: e.target.value })}
           />
         )}
         {currentStep === 4 && (
           <input
             type="text"
-            placeholder="job description"
+            placeholder="Where do you want to work"
             value={formData.input4}
-            onChange={(e) =>
-              setFormData({ ...formData, input4: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, input4: e.target.value })}
           />
         )}
         {currentStep === 5 && (
           <input
             type="text"
-            placeholder="mode of internship"
+            placeholder="You would love work in this city"
             value={formData.input5}
-            onChange={(e) =>
-              setFormData({ ...formData, input5: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, input5: e.target.value })}
           />
         )}
       </div>
 
-      {/* Navigation buttons */}
+      {/* Footer */}
       <div className="stepper-footer">
         <button
           className="step-btn back"
@@ -113,12 +101,11 @@ export default function Stepper({ onComplete }) {
         >
           Previous
         </button>
-
         <button
           className="step-btn next"
           onClick={() => {
             if (currentStep === totalSteps) {
-              if (onComplete) onComplete(formData); // ✅ send data to SecondPage
+              if (onComplete) onComplete(formData);
               console.log("Form Submitted ✅", formData);
             } else {
               setCurrentStep(currentStep + 1);

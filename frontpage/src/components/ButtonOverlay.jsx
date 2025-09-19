@@ -1,12 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import navigation hook
+import React, { useEffect, useState } from "react";
 
-const ButtonOverlay = () => {
-  const navigate = useNavigate();
+const ButtonOverlay = ({ onClick }) => {
+  const [showButton, setShowButton] = useState(false);
 
-  const handleClick = () => {
-    navigate("/second"); // ✅ goes to SecondPage.jsx
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => setShowButton(true), 2200); // delay after subtitle
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div
@@ -20,27 +20,29 @@ const ButtonOverlay = () => {
     >
       <button
         style={{
-          backgroundColor: "black",
-          color: "white",
+          backgroundColor: "rgb(195, 142, 150)", // ✅ button background
+          color: "rgb(6, 15, 49)", // ✅ dark navy text
           padding: "12px 24px",
-          border: "1px solid #555",
+          border: "none",
           borderRadius: "8px",
           fontSize: "1rem",
+          fontWeight: "bold",
           cursor: "pointer",
           marginTop: "150px",
           boxShadow:
-            "0 0 15px rgba(192,192,192,0.8), 0 0 30px rgba(192,192,192,0.7)",
-          transition: "all 0.3s ease",
+            "0 0 15px rgba(195,142,150,0.6), 0 0 30px rgba(195,142,150,0.4)",
+          transition: "all 0.6s ease",
+          opacity: showButton ? 1 : 0, // ✅ fade-in for button
         }}
         onMouseOver={(e) => {
           e.target.style.boxShadow =
-            "0 0 25px rgba(192,192,192,1), 0 0 50px rgba(192,192,192,0.9)";
+            "0 0 25px rgba(195,142,150,1), 0 0 50px rgba(195,142,150,0.9)";
         }}
         onMouseOut={(e) => {
           e.target.style.boxShadow =
-            "0 0 15px rgba(192,192,192,0.8), 0 0 30px rgba(192,192,192,0.7)";
+            "0 0 15px rgba(195,142,150,0.6), 0 0 30px rgba(195,142,150,0.4)";
         }}
-        onClick={handleClick} // ✅ navigate on click
+        onClick={onClick} // ✅ trigger fade-out from App
       >
         Get Started
       </button>
@@ -49,4 +51,3 @@ const ButtonOverlay = () => {
 };
 
 export default ButtonOverlay;
-
